@@ -12,4 +12,4 @@ a,b = getCorrespondences(img1_url,img2_url,4)
 
 homographer = Homographer(a,b)
 homographer.setH()
-print(homographer.H)
+homographer.testH(img2_url)

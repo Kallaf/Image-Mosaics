@@ -1,4 +1,6 @@
 import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
 
 class Homographer:
 
@@ -20,3 +22,22 @@ class Homographer:
         self.H = np.linalg.lstsq(A, B, rcond=None)[0]
         self.H = np.insert(self.H, [8], [1.0])
         self.H = self.H.reshape(3,3)
+
+    def transform(self,p1):
+        p1 = np.array(p1)
+        p1 = np.insert(p1,2,1,axis = 1)
+        p1 = p1.transpose()
+        tempMatrix = self.H.dot(p1)
+        p1_ = []
+        tempMatrix = tempMatrix.transpose()
+        for row in tempMatrix:
+            p1_.append([row[0]/row[2],row[1]/row[2]])
+        return p1_
+
+    def testH(self,img2_url):
+        img=mpimg.imread(img2_url)
+        imgplot = plt.imshow(img)
+        p1_ = self.transform(self.a)
+        for p in p1_:
+            plt.scatter(p[0],p[1], s=30)
+        plt.show()
