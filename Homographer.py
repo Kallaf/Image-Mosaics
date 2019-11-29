@@ -1,28 +1,42 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
+import cv2
 
 class Homographer:
 
     def __init__(self,a,b):
         self.a = a
         self.b = b
+        print(a)
+        print(b)
 
     def setH(self):
         A = []
         B = []
 
         for i,a in enumerate(self.a):
-            A.append(np.asarray([a[0],a[1],1,0,0,0,-a[0]*self.b[i][0],-a[1]*self.b[i][0]]))
-            A.append(np.asarray([0,0,0,a[0],a[1],1,-a[0]*self.b[i][1],-a[1]*self.b[i][1]]))
-            B.append(np.asarray(self.b[i][0]))
-            B.append(np.asarray(self.b[i][1]))
+            b = self.b[i]
+            A.append(np.asarray([a[0],a[1],1,0,0,0,-a[0]*b[0],-a[1]*b[0]]))
+            A.append(np.asarray([0,0,0,a[0],a[1],1,-a[0]*b[1],-a[1]*b[1]]))
+            B.append(np.asarray(b[0]))
+            B.append(np.asarray(b[1]))
         A = np.asarray(A)
         B = np.asarray(B)
         self.H = np.linalg.lstsq(A, B, rcond=None)[0]
         self.H = np.insert(self.H, [8], [1.0])
         self.H = self.H.reshape(3,3)
-
+        print(self.H)
+        print()
+        H, status = cv2.findHomography(np.asarray(self.a),np.asarray(self.b))
+        print(H)
+        print()
+        print(np.subtract(H,self.H))
+        print(sum(sum(abs(np.subtract(H,self.H))))//9)
+        print()
+        print()
+        #self.H = H
+        
     def transform(self,p1):
         p1 = np.array(p1)
         p1 = np.insert(p1,2,1,axis = 1)
