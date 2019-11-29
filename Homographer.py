@@ -8,8 +8,8 @@ class Homographer:
     def __init__(self,a,b):
         self.a = a
         self.b = b
-        print(a)
-        print(b)
+        print("a = ",a)
+        print("b = ",b)
 
     def setH(self):
         A = []
@@ -26,16 +26,21 @@ class Homographer:
         self.H = np.linalg.lstsq(A, B, rcond=None)[0]
         self.H = np.insert(self.H, [8], [1.0])
         self.H = self.H.reshape(3,3)
+        print("our homography matrix")
         print(self.H)
         print()
         H, status = cv2.findHomography(np.asarray(self.a),np.asarray(self.b))
+
+        print("cv2 homography matrix")
         print(H)
         print()
+
+        print("difference between the two matricies")
         print(np.subtract(H,self.H))
-        print(sum(sum(abs(np.subtract(H,self.H))))//9)
+        print("total error = ",sum(sum(abs(np.subtract(H,self.H))))//9)
         print()
         print()
-        #self.H = H
+        self.H = H
         
     def transform(self,p1):
         p1 = np.array(p1)

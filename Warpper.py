@@ -1,7 +1,7 @@
 from Homographer import Homographer
 from PIL import Image
 import numpy as np
-import scipy.misc as smp
+import math
 
 class Warpper:
 
@@ -28,7 +28,7 @@ class Warpper:
             new_corr.append(p_)
 
 
-        print(mnx,mny,mxx,mxy)
+        #print(mnx,mny,mxx,mxy)
         im2 = Image.open(img2_url)
         width2,height2 = im2.size
         data = np.zeros( (int(max(mxy,height2)-mny+1),int(max(mxx,width2)-mnx+1),4), dtype=np.uint8 )
@@ -45,9 +45,9 @@ class Warpper:
 
         for i,row in enumerate(new_corr):
             for j,corr in enumerate(row):
-                    x = int(corr[0] - mnx)
-                    y = int(corr[1] - mny)
+                    x = math.floor(corr[0] - mnx + 0.5)
+                    y = math.floor(corr[1] - mny + 0.5)
                     temp = pix[i][j]
                     data[x,y] = temp
-        img = smp.toimage( data )       # Create a PIL image
-        img.show()
+        return data
+        
