@@ -48,7 +48,8 @@ class Warpper:
             for j,corr in enumerate(row):
                     x = int(corr[0])
                     y = int(corr[1])
-                    self.data[i][j] = [channels[0][y][x],channels[1][y][x],channels[2][y][x],channels[3][y][x]]
+                    if x >= 0 and y >=0:
+                        self.data[i][j] = [channels[0][y][x],channels[1][y][x],channels[2][y][x],channels[3][y][x]]
 
 
     def warp(self):
