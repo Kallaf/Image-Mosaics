@@ -24,6 +24,8 @@ except:
 homographer = Homographer(a,b)
 homographer.setH()
 homographer.testH(img2_url)
-warpper = Warpper()
-warpper.warp(img1_url,homographer)
-warpper.merge_images(img2_url)
+homographer.testH_inverse(img1_url)
+
+warpper = Warpper(img1_url,img2_url,homographer)
+warpper.warp()
+warpper.merge_images()

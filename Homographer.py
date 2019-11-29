@@ -53,10 +53,29 @@ class Homographer:
             p1_.append([row[0]/row[2],row[1]/row[2]])
         return p1_
 
+    def inverse_transform(self,p1_):
+        p1_ = np.array(p1_)
+        p1_ = np.insert(p1_,2,1,axis = 1)
+        p1_ = p1_.transpose()
+        tempMatrix = np.linalg.inv(self.H).dot(p1_)
+        p1 = []
+        tempMatrix = tempMatrix.transpose()
+        for row in tempMatrix:
+            p1.append([row[0]/row[2],row[1]/row[2]])
+        return p1
+
     def testH(self,img2_url):
         img=mpimg.imread(img2_url)
         imgplot = plt.imshow(img)
         p1_ = self.transform(self.a)
         for p in p1_:
+            plt.scatter(p[0],p[1], s=30)
+        plt.show()
+
+    def testH_inverse(self,img1_url):
+        img=mpimg.imread(img1_url)
+        imgplot = plt.imshow(img)
+        p1 = self.inverse_transform(self.b)
+        for p in p1:
             plt.scatter(p[0],p[1], s=30)
         plt.show()
