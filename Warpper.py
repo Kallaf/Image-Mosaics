@@ -87,10 +87,10 @@ class Warpper:
                     self.data[y][x] = self.pix[i][j]
 
         
-        wrapped_img = smp.toimage( self.data )       # Create a PIL image
+        wrapped_img = Image.fromarray( self.data )       # Create a PIL image
         wrapped_img.show()
         self.inverse_warp()
-        wrapped_img = smp.toimage( self.data )       # Create a PIL image
+        wrapped_img = Image.fromarray( self.data )       # Create a PIL image
         wrapped_img.show()
         
 
@@ -112,5 +112,5 @@ class Warpper:
                 data[int(y-self.mny),int(x-self.mnx)] = pix[y][x] 
 
 
-        final_img = smp.toimage( data )       # Create a PIL image
-        final_img.show()        
+        final_img = Image.fromarray( data )       # Create a PIL image
+        final_img.show()
