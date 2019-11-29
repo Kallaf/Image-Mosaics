@@ -40,7 +40,7 @@ class Homographer:
         print("total error = ",sum(sum(abs(np.subtract(H,self.H))))//9)
         print()
         print()
-        self.H = H
+        #self.H = H
         
     def transform(self,p1):
         p1 = np.array(p1)

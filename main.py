@@ -3,7 +3,6 @@ from Homographer import Homographer
 from Warpper import Warpper
 import cv2
 import numpy as np
-import scipy.misc as smp
 
 folderUrl = 'Images/The White Building/'
 img1_url = folderUrl + 'image1.png'
@@ -26,6 +25,5 @@ homographer = Homographer(a,b)
 homographer.setH()
 homographer.testH(img2_url)
 warpper = Warpper()
-wrapped_data = warpper.warp(img1_url,img2_url,homographer)
-wrapped_img = smp.toimage( wrapped_data )       # Create a PIL image
-wrapped_img.show()
+warpper.warp(img1_url,homographer)
+warpper.merge_images(img2_url)
