@@ -5,7 +5,7 @@ import cv2
 import random
 
 
-def getCorrespondences(img1_url, img2_url):
+def getCorrespondences_auto(img1_url, img2_url):
 
     img1 = cv2.imread(img1_url)
     img2 = cv2.imread(img2_url)
