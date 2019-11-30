@@ -8,8 +8,8 @@ class Homographer:
     def __init__(self,a,b):
         self.a = a
         self.b = b
-        print("a = ",a)
-        print("b = ",b)
+        # print("a = ",a)
+        # print("b = ",b)
 
     def setH(self):
         A = []
@@ -29,7 +29,7 @@ class Homographer:
         print("our homography matrix")
         print(self.H)
         print()
-        H, status = cv2.findHomography(np.asarray(self.a),np.asarray(self.b))
+        H, status = cv2.findHomography(np.asarray(self.a),np.asarray(self.b), cv2.RANSAC, 5.0)
 
         print("cv2 homography matrix")
         print(H)
@@ -40,7 +40,7 @@ class Homographer:
         print("total error = ",sum(sum(abs(np.subtract(H,self.H))))//9)
         print()
         print()
-        #self.H = H
+        self.H = H
         
     def transform(self,p1):
         p1 = np.array(p1)
@@ -66,17 +66,17 @@ class Homographer:
 
     def testH(self,img2_url):
         img=mpimg.imread(img2_url)
-        imgplot = plt.imshow(img)
-        for p in self.b:
+        plt.imshow(img)
+        p1_ = self.transform(self.a)
+
+        for p in p1_:
             plt.scatter(p[0],p[1], s=30)
         plt.show()
-        p1_ = self.transform(self.a)
-        print(p1_)
 
     def testH_inverse(self,img1_url):
         img=mpimg.imread(img1_url)
-        imgplot = plt.imshow(img)
-        for p in self.a:
+        plt.imshow(img)
+        p1_ = self.inverse_transform(self.b)
+        for p in p1_:
             plt.scatter(p[0],p[1], s=30)
         plt.show()
-        p1 = self.inverse_transform(self.b)

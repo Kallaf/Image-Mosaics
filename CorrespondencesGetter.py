@@ -5,7 +5,7 @@ import cv2
 import random
 
 
-def getCorrespondences(img1_url, img2_url, n):
+def getCorrespondences(img1_url, img2_url):
 
     img1 = cv2.imread(img1_url)
     img2 = cv2.imread(img2_url)
@@ -15,7 +15,7 @@ def getCorrespondences(img1_url, img2_url, n):
 
     # fast = cv2.FastFeatureDetector_create()
     # surf = cv2.xfeatures2d.SURF_create(400)
-    # orb = cv2.ORB_create()
+    # orb = cv2.ORB_create(400)
     sift = cv2.xfeatures2d.SIFT_create(400)
 
     # find the keypoints and descriptors with SIFT
@@ -38,16 +38,14 @@ def getCorrespondences(img1_url, img2_url, n):
     list_kp2 = []
     good_matches = []
 
-    i = 0
     for mat in matches:
         # Apply ratio test
-        if mat[0].distance < 0.6 * mat[1].distance:
+        if mat[0].distance < 0.7 * mat[1].distance:
             # Append good matches
             good_matches.append([mat[0]])
-
             # Get the matching keypoints for each of the images
             img1_idx = mat[0].queryIdx
-            img2_idx = mat[1].trainIdx
+            img2_idx = mat[0].trainIdx
 
             # Get the coordinates
             (x1, y1) = kp1[img1_idx].pt
@@ -56,10 +54,6 @@ def getCorrespondences(img1_url, img2_url, n):
             # Append to each list
             list_kp1.append((x1, y1))
             list_kp2.append((x2, y2))
-
-            i += 1
-            # if i == 40:
-            #     break
 
     # # cv2.drawMatchesKnn expects list of lists as matches.
     img3 = cv2.drawMatchesKnn(gray1, kp1, gray2, kp2, good_matches, flags=2, outImg=None)
