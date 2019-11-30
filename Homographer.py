@@ -67,15 +67,16 @@ class Homographer:
     def testH(self,img2_url):
         img=mpimg.imread(img2_url)
         imgplot = plt.imshow(img)
-        p1_ = self.transform(self.a)
-        for p in p1_:
+        for p in self.b:
             plt.scatter(p[0],p[1], s=30)
         plt.show()
+        p1_ = self.transform(self.a)
+        print(p1_)
 
     def testH_inverse(self,img1_url):
         img=mpimg.imread(img1_url)
         imgplot = plt.imshow(img)
-        p1 = self.inverse_transform(self.b)
-        for p in p1:
+        for p in self.a:
             plt.scatter(p[0],p[1], s=30)
         plt.show()
+        p1 = self.inverse_transform(self.b)

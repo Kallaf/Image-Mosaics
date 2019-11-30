@@ -75,7 +75,7 @@ class Warpper:
 
         self.warpped_height = int(self.mxy-self.mny+2)
         self.warpped_width = int(self.mxx-self.mnx+2)
-        self.data = np.zeros( (self.warpped_height,self.warpped_width,4), dtype=np.uint8 )
+        self.data = np.zeros( (self.warpped_height,self.warpped_width,4), dtype=np.uint8)
         self.pix = list(self.im1.getdata())
         self.pix = np.reshape(self.pix, (height,width,4))
         
@@ -97,7 +97,7 @@ class Warpper:
 
     def merge_images(self):
         width,height = self.im2.size
-        data = np.zeros( (int(max(height,self.mxy)-self.mny+2),int(max(width,self.mxx)-self.mnx+2),4), dtype=np.uint8 )
+        data = np.zeros( (int(max(height,self.mxy)-self.mny+2),int(max(width,self.mxx)-self.mnx+2),4), dtype=np.uint8)
         
         
         for y in range(0,self.warpped_height):
